@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Flexrota</title>
 
   <style>
@@ -14,24 +15,32 @@
 
     body {
       font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
+      background: #f3f4f6;
+      color: #1f2937;
     }
 
     header {
-      background: #1f2937;
+      background: #111827;
       color: white;
-      padding: 20px;
-      text-align: center;
+      padding: 18px;
     }
 
-    header h1 {
-      font-size: 28px;
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    header p {
-      margin-top: 5px;
-      opacity: 0.8;
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .manager-label {
+      font-size: 13px;
+      opacity: 0.75;
     }
 
     .container {
@@ -40,29 +49,30 @@
       padding: 0 15px;
     }
 
-    .welcome {
-      background: white;
-      border-radius: 12px;
-      padding: 25px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-
-    .welcome h2 {
-      margin-bottom: 10px;
-    }
-
-    .buttons {
+    .top-bar {
       display: flex;
-      gap: 12px;
-      margin-top: 20px;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
+    }
+
+    .top-bar h2 {
+      font-size: 24px;
+    }
+
+    .week-controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
     }
 
     button {
       border: none;
       border-radius: 8px;
-      padding: 12px 18px;
-      font-size: 16px;
+      padding: 11px 15px;
+      font-size: 15px;
       cursor: pointer;
       background: #2563eb;
       color: white;
@@ -76,50 +86,806 @@
       background: #6b7280;
     }
 
+    .success {
+      background: #16a34a;
+    }
+
+    .danger {
+      background: #dc2626;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+
+    .card h3 {
+      margin-bottom: 15px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 35px 15px;
+      color: #6b7280;
+    }
+
+    .rota-table-wrapper {
+      overflow-x: auto;
+    }
+
+    .rota-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 750px;
+    }
+
+    .rota-table th,
+    .rota-table td {
+      border: 1px solid #e5e7eb;
+      padding: 10px;
+      text-align: center;
+      vertical-align: top;
+    }
+
+    .rota-table th {
+      background: #f9fafb;
+      font-size: 14px;
+    }
+
+    .employee-name {
+      font-weight: bold;
+      text-align: left !important;
+      min-width: 130px;
+    }
+
+    .shift {
+      background: #eff6ff;
+      border-radius: 7px;
+      padding: 8px;
+      margin-bottom: 5px;
+      cursor: pointer;
+      border-left: 4px solid #2563eb;
+    }
+
+    .shift-time {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .shift-task {
+      font-size: 12px;
+      margin-top: 4px;
+      color: #4b5563;
+    }
+
+    .response {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 3px 7px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .accepted {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .declined {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .employee-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .employee {
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .employee-name-list {
+      font-weight: bold;
+    }
+
+    .small-button {
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #d1d5db;
+      border-radius: 7px;
+      font-size: 15px;
+      background: white;
+    }
+
+    .form-actions {
+      margin-top: 15px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .notice {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
     footer {
       text-align: center;
-      margin-top: 40px;
-      padding: 20px;
-      color: #777;
-      font-size: 14px;
+      padding: 25px;
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      .header-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .top-bar h2 {
+        font-size: 21px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <header>
-    <h1>Flexrota</h1>
-    <p>Simple staff rota management</p>
-  </header>
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="logo">Flexrota</div>
+      <div class="manager-label">Staff rota management</div>
+    </div>
 
-  <main class="container">
+    <div class="manager-label">
+      Manager
+    </div>
+  </div>
+</header>
 
-    <section class="welcome">
-      <h2>Welcome to Flexrota</h2>
+<main class="container">
 
-      <p>
-        Manage your team's shifts, see who's working,
-        and keep track of shift confirmations.
-      </p>
+  <div class="top-bar">
+    <h2>Weekly Rota</h2>
 
-      <div class="buttons">
-        <button onclick="alert('Rota coming next!')">
-          View Rota
-        </button>
+    <div class="week-controls">
+      <button class="secondary" onclick="previousWeek()">←</button>
+      <button onclick="today()">Today</button>
+      <button class="secondary" onclick="nextWeek()">→</button>
+    </div>
+  </div>
 
-        <button class="secondary" onclick="alert('Employee management coming next!')">
-          Employees
-        </button>
-      </div>
-    </section>
+  <div class="card">
 
-  </main>
+    <div class="notice">
+      Click <strong>Add Shift</strong> to put an employee onto the rota.
+      Click an existing shift to edit it.
+    </div>
 
-  <footer>
-    Flexrota &copy; 2026
-  </footer>
+    <div class="form-actions">
+      <button onclick="showShiftForm()">
+        + Add Shift
+      </button>
+
+      <button class="secondary" onclick="showEmployeeForm()">
+        + Add Employee
+      </button>
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <h3 id="weekTitle">This Week</h3>
+
+    <div class="rota-table-wrapper">
+
+      <table class="rota-table">
+
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
+          </tr>
+        </thead>
+
+        <tbody id="rotaBody"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <h3>Employees</h3>
+
+    <div id="employeeList" class="employee-list"></div>
+
+  </div>
+
+  <div class="card" id="formCard" style="display:none;">
+
+    <h3 id="formTitle">Add Shift</h3>
+
+    <div id="formContents"></div>
+
+  </div>
+
+</main>
+
+<footer>
+  Flexrota &copy; 2026
+</footer>
 
 <script src="app.js"></script>
+
+<script>
+
+let currentDate = new Date();
+
+function getStartOfWeek(date) {
+
+  const d = new Date(date);
+  const day = d.getDay();
+
+  const difference = day === 0 ? -6 : 1 - day;
+
+  d.setDate(d.getDate() + difference);
+  d.setHours(0, 0, 0, 0);
+
+  return d;
+}
+
+function formatDate(date) {
+
+  return date.toISOString().split("T")[0];
+
+}
+
+function displayDate(date) {
+
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short"
+  });
+
+}
+
+function renderRota() {
+
+  const body = document.getElementById("rotaBody");
+  body.innerHTML = "";
+
+  const start = getStartOfWeek(currentDate);
+
+  const days = [];
+
+  for (let i = 0; i < 7; i++) {
+
+    const day = new Date(start);
+    day.setDate(start.getDate() + i);
+
+    days.push(day);
+
+  }
+
+  document.getElementById("weekTitle").textContent =
+    displayDate(days[0]) + " - " + displayDate(days[6]);
+
+  if (employees.length === 0) {
+
+    body.innerHTML =
+      '<tr><td colspan="8" class="empty">No employees added yet.</td></tr>';
+
+    return;
+
+  }
+
+  employees.forEach(employee => {
+
+    const row = document.createElement("tr");
+
+    const nameCell = document.createElement("td");
+
+    nameCell.className = "employee-name";
+    nameCell.textContent = employee.name;
+
+    row.appendChild(nameCell);
+
+    days.forEach(day => {
+
+      const cell = document.createElement("td");
+
+      const dateString = formatDate(day);
+
+      const employeeShifts = shifts.filter(shift =>
+        shift.employeeId === employee.id &&
+        shift.date === dateString
+      );
+
+      employeeShifts.forEach(shift => {
+
+        const shiftDiv = document.createElement("div");
+
+        shiftDiv.className = "shift";
+
+        shiftDiv.onclick = function() {
+          editExistingShift(shift.id);
+        };
+
+        let responseText = "Awaiting reply";
+        let responseClass = "pending";
+
+        if (shift.response === "yes") {
+          responseText = "YES";
+          responseClass = "accepted";
+        }
+
+        if (shift.response === "no") {
+          responseText = "NO";
+          responseClass = "declined";
+        }
+
+        shiftDiv.innerHTML = `
+          <div class="shift-time">
+            ${shift.startTime} - ${shift.endTime}
+          </div>
+
+          <div class="shift-task">
+            ${shift.task || "No task added"}
+          </div>
+
+          <span class="response ${responseClass}">
+            ${responseText}
+          </span>
+        `;
+
+        cell.appendChild(shiftDiv);
+
+      });
+
+      row.appendChild(cell);
+
+    });
+
+    body.appendChild(row);
+
+  });
+
+}
+
+function renderEmployees() {
+
+  const list = document.getElementById("employeeList");
+
+  list.innerHTML = "";
+
+  if (employees.length === 0) {
+
+    list.innerHTML =
+      '<div class="empty">No employees added yet.</div>';
+
+    return;
+
+  }
+
+  employees.forEach(employee => {
+
+    const div = document.createElement("div");
+
+    div.className = "employee";
+
+    div.innerHTML = `
+      <span class="employee-name-list">
+        ${employee.name}
+      </span>
+
+      <button
+        class="danger small-button"
+        onclick="removeEmployeeFromPage(${employee.id})">
+        Remove
+      </button>
+    `;
+
+    list.appendChild(div);
+
+  });
+
+}
+
+function refreshPage() {
+
+  renderRota();
+  renderEmployees();
+
+}
+
+function showEmployeeForm() {
+
+  const card = document.getElementById("formCard");
+  const title = document.getElementById("formTitle");
+  const contents = document.getElementById("formContents");
+
+  title.textContent = "Add Employee";
+
+  contents.innerHTML = `
+    <div class="form-grid">
+
+      <div>
+        <label>Employee name</label>
+        <input id="employeeName" type="text" placeholder="e.g. Sarah">
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+
+      <button onclick="saveEmployeeFromPage()">
+        Save Employee
+      </button>
+
+      <button class="secondary" onclick="closeForm()">
+        Cancel
+      </button>
+
+    </div>
+  `;
+
+  card.style.display = "block";
+
+  card.scrollIntoView({
+    behavior: "smooth"
+  });
+
+}
+
+function saveEmployeeFromPage() {
+
+  const name = document.getElementById("employeeName").value;
+
+  const employee = addEmployee(name);
+
+  if (!employee) {
+
+    alert("Please enter an employee name.");
+    return;
+
+  }
+
+  closeForm();
+  refreshPage();
+
+}
+
+function removeEmployeeFromPage(id) {
+
+  const employee = getEmployee(id);
+
+  if (!employee) {
+    return;
+  }
+
+  if (!confirm(
+    "Remove " + employee.name + "? Their shifts will also be removed."
+  )) {
+    return;
+  }
+
+  removeEmployee(id);
+
+  refreshPage();
+
+}
+
+function showShiftForm(existingShift = null) {
+
+  const card = document.getElementById("formCard");
+  const title = document.getElementById("formTitle");
+  const contents = document.getElementById("formContents");
+
+  title.textContent = existingShift
+    ? "Edit Shift"
+    : "Add Shift";
+
+  if (employees.length === 0) {
+
+    contents.innerHTML = `
+      <div class="notice">
+        Add an employee first before creating a shift.
+      </div>
+
+      <button onclick="showEmployeeForm()">
+        Add Employee
+      </button>
+    `;
+
+    card.style.display = "block";
+    return;
+
+  }
+
+  const start = getStartOfWeek(currentDate);
+
+  const defaultDate =
+    existingShift
+      ? existingShift.date
+      : formatDate(start);
+
+  let employeeOptions = "";
+
+  employees.forEach(employee => {
+
+    employeeOptions += `
+      <option
+        value="${employee.id}"
+        ${existingShift &&
+          existingShift.employeeId === employee.id
+          ? "selected"
+          : ""}>
+        ${employee.name}
+      </option>
+    `;
+
+  });
+
+  contents.innerHTML = `
+
+    <div class="form-grid">
+
+      <div>
+        <label>Employee</label>
+
+        <select id="shiftEmployee">
+          ${employeeOptions}
+        </select>
+      </div>
+
+      <div>
+        <label>Date</label>
+
+        <input
+          id="shiftDate"
+          type="date"
+          value="${defaultDate}">
+      </div>
+
+      <div>
+        <label>Start time</label>
+
+        <input
+          id="shiftStart"
+          type="time"
+          value="${existingShift ? existingShift.startTime : "09:00"}">
+      </div>
+
+      <div>
+        <label>End time</label>
+
+        <input
+          id="shiftEnd"
+          type="time"
+          value="${existingShift ? existingShift.endTime : "17:00"}">
+      </div>
+
+      <div>
+        <label>Task / Job</label>
+
+        <input
+          id="shiftTask"
+          type="text"
+          placeholder="e.g. Front desk"
+          value="${existingShift ? existingShift.task : ""}">
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+
+      <button onclick="${existingShift
+        ? `saveEditedShift(${existingShift.id})`
+        : "saveNewShiftFromPage()"}">
+        ${existingShift ? "Save Changes" : "Add Shift"}
+      </button>
+
+      ${
+        existingShift
+        ? `<button class="danger" onclick="deleteShiftFromPage(${existingShift.id})">
+             Delete Shift
+           </button>`
+        : ""
+      }
+
+      <button class="secondary" onclick="closeForm()">
+        Cancel
+      </button>
+
+    </div>
+  `;
+
+  card.style.display = "block";
+
+  card.scrollIntoView({
+    behavior: "smooth"
+  });
+
+}
+
+function saveNewShiftFromPage() {
+
+  const employeeId =
+    Number(document.getElementById("shiftEmployee").value);
+
+  const date =
+    document.getElementById("shiftDate").value;
+
+  const start =
+    document.getElementById("shiftStart").value;
+
+  const end =
+    document.getElementById("shiftEnd").value;
+
+  const task =
+    document.getElementById("shiftTask").value;
+
+  if (!date || !start || !end) {
+
+    alert("Please complete the date and shift times.");
+    return;
+
+  }
+
+  addShift(
+    employeeId,
+    date,
+    start,
+    end,
+    task
+  );
+
+  closeForm();
+  refreshPage();
+
+}
+
+function editExistingShift(id) {
+
+  const shift = shifts.find(s => s.id === id);
+
+  if (!shift) {
+    return;
+  }
+
+  showShiftForm(shift);
+
+}
+
+function saveEditedShift(id) {
+
+  const updates = {
+
+    employeeId:
+      Number(document.getElementById("shiftEmployee").value),
+
+    date:
+      document.getElementById("shiftDate").value,
+
+    startTime:
+      document.getElementById("shiftStart").value,
+
+    endTime:
+      document.getElementById("shiftEnd").value,
+
+    task:
+      document.getElementById("shiftTask").value
+
+  };
+
+  editShift(id, updates);
+
+  closeForm();
+  refreshPage();
+
+}
+
+function deleteShiftFromPage(id) {
+
+  if (!confirm("Delete this shift?")) {
+    return;
+  }
+
+  deleteShift(id);
+
+  closeForm();
+  refreshPage();
+
+}
+
+function closeForm() {
+
+  document.getElementById("formCard").style.display = "none";
+
+}
+
+function previousWeek() {
+
+  currentDate.setDate(
+    currentDate.getDate() - 7
+  );
+
+  refreshPage();
+
+}
+
+function nextWeek() {
+
+  currentDate.setDate(
+    currentDate.getDate() + 7
+  );
+
+  refreshPage();
+
+}
+
+function today() {
+
+  currentDate = new Date();
+
+  refreshPage();
+
+}
+
+refreshPage();
+
+</script>
+
 </body>
 </html>
